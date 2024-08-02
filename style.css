@@ -12,12 +12,15 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Ensure content is centered horizontally */
     height: 100vh;
     padding: 0 20px;
+    position: relative; /* Necessary for absolute positioning of the image */
 }
 
 .text-content {
     z-index: 1;
+    text-align: center; /* Center text content */
 }
 
 .image-container {
@@ -35,7 +38,7 @@ body, html {
 #ascii-art {
     font-size: 0.9em;
     white-space: pre;
-    text-align: left;
+    text-align: center; /* Center ASCII art */
     margin-bottom: 20px;
 }
 
