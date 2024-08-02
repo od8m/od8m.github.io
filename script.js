@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Try to play audio immediately
     audio.play().catch(e => {
         console.log("Autoplay was prevented. Click anywhere to play audio.");
-        document.body.addEventListener('click', () => audio.play(), { once: true });
+        document.body.addEventListener('click', function() {
+            audio.play();
+        }, { once: true });
     });
 });
