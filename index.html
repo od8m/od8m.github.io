@@ -5,7 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BinaryFB</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+            overflow: hidden;
+        }
+        #static-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        #ascii-art {
+            font-size: 0.7em;
+            white-space: pre;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 300;
+        }
+        #telegram-button:hover {
+            color: #0088cc;
+        }
+        #github-button:hover {
+            color: #6e5494;
+        }
+        #now-playing-container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+        #now-playing {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
 </head>
 <body>
     <canvas id="static-background"></canvas>
@@ -20,11 +93,8 @@
                            __/ |                
                           |___/                 
         </pre>
-        <div>
-            <a href="https://t.me/Od8mCracks" class="button" id="telegram-button" target="_blank">t.me/Od8mCracks</a>
-            <a href="https://x.com/od8m_" class="button" id="twitter-button" target="_blank">x.com/od8m</a>
-            <a href="https://github.com/od8m" class="button" id="github-button" target="_blank">github.com/od8m</a>
-        </div>
+        <a href="https://t.me/Od8mCracks" class="button" id="telegram-button" target="_blank">t.me/Od8mCracks</a>
+        <a href="https://github.com/od8m" class="button" id="github-button" target="_blank">github.com/od8m</a>
     </div>
     <div id="now-playing-container">
         <div id="now-playing">
@@ -32,6 +102,46 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const canvas = document.getElementById('static-background');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createStaticNoise() {
+            const imageData = ctx.createImageData(canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const gray = Math.floor(Math.random() * 256);
+                data[i] = data[i + 1] = data[i + 2] = gray;
+                data[i + 3] = 255;
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function animateStatic() {
+            createStaticNoise();
+            requestAnimationFrame(animateStatic);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateStatic();
+
+        // Audio playback
+        const audio = new Audio('https://example.com/path/to/TM_Ezco44_BLIND.mp3');
+        audio.loop = true;
+
+        // Try to play audio immediately
+        audio.play().catch(e => {
+            console.log("Autoplay was prevented. Click anywhere to play audio.");
+            document.body.addEventListener('click', () => audio.play(), { once: true });
+        });
+    </script>
 </body>
 </html>
