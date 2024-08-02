@@ -1,18 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Audio playback
-    const audio = document.getElementById('background-music');
+    const audio = new Audio('https://example.com/path/to/TM_Ezco44_BLIND.mp3');
     audio.loop = true;
 
-    const clickMeButton = document.getElementById('click-me-button');
-    const nowPlayingContainer = document.getElementById('now-playing-container');
-    const clickMeContainer = document.getElementById('click-me-container');
-
-    clickMeButton.addEventListener('click', function() {
-        audio.play().then(() => {
-            clickMeContainer.style.display = 'none';
-            nowPlayingContainer.style.display = 'block';
-        }).catch(e => {
-            console.log("Audio play was prevented.");
-        });
+    // Try to play audio immediately
+    audio.play().catch(e => {
+        console.log("Autoplay was prevented. Click anywhere to play audio.");
+        document.body.addEventListener('click', () => audio.play(), { once: true });
     });
 });
