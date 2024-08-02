@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Audio playback
-    const audio = new Audio('https://example.com/path/to/TM_Ezco44_BLIND.mp3');
+    const audio = document.getElementById('background-music');
     audio.loop = true;
 
     // Try to play audio immediately
