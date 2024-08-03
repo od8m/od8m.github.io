@@ -3,13 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binary FB</title>
-    <link rel="stylesheet" href="style.css">
+    <title>od8m.lol</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #1B1D1E;
+            color: #F8F8F2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #terminal {
+            height: 100vh;
+            width: 100vw;
+            background-color: #1B1D1E;
+            color: #F8F8F2;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 16px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            overflow-y: auto;
+        }
+        .prompt {
+            color: #A6E22E;
+        }
+        .command {
+            color: #F8F8F2;
+        }
+        .output {
+            color: #F8F8F2;
+        }
+        .input-line {
+            display: flex;
+        }
+        .input-field {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #F8F8F2;
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+        }
+        #main-content {
+            display: none;
+            height: 100vh;
+            overflow: auto;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .text-content {
+            z-index: 1;
+            text-align: center;
+        }
+        .image-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .anime-girl {
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        #ascii-art {
+            font-size: 0.9em;
+            white-space: pre;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button {
+            background-color: transparent;
+            color: #F8F8F2;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: color 0.3s;
+            text-decoration: none;
+            display: block;
+            font-size: 1em;
+            font-weight: 300;
+            text-align: center;
+            width: 100%;
+        }
+        #telegram-button:hover { color: #0088cc; }
+        #twitter-button:hover { color: #1DA1F2; }
+        #github-button:hover { color: #6e5494; }
+        #now-playing-container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            z-index: 3;
+        }
+        #now-playing {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
 </head>
 <body>
-    <div class="content">
-        <div class="text-content">
-            <pre id="ascii-art">
+    <div id="terminal"></div>
+
+    <div id="main-content">
+        <div class="content">
+            <div class="text-content">
+                <pre id="ascii-art">
  ____  _                           ______ ____  
 |  _ \(_)                         |  ____|  _ \ 
 | |_) |_ _ __   __ _ _ __ _   _   | |__  | |_) |
@@ -18,25 +142,114 @@
 |____/|_|_| |_|\__,_|_|   \__, |  |_|    |____/ 
                            __/ |                
                           |___/                 
-            </pre>
-
-            <div>
-                <a href="https://t.me/Od8mCracks" id="telegram-button" class="button" target="_blank">t.me/Od8mCracks</a>
-                <a href="https://x.com/od8m_" id="twitter-button" class="button" target="_blank">x.com/od8m</a>
-                <a href="https://github.com/od8m" id="github-button" class="button" target="_blank">github.com/od8m</a>
+                </pre>
+                <div class="button-container">
+                    <a href="https://t.me/Od8mCracks" id="telegram-button" class="button" target="_blank">t.me/Od8mCracks</a>
+                    <a href="https://x.com/od8m_" id="twitter-button" class="button" target="_blank">x.com/od8m</a>
+                    <a href="https://github.com/od8m" id="github-button" class="button" target="_blank">github.com/od8m</a>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
             </div>
         </div>
-        <div class="image-container">
-            <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
+        <div id="now-playing-container">
+            <div id="now-playing">
+                &gt; playing now: [ TM & Ezco44 - BLIND (prod. by endzone) ]
+            </div>
         </div>
     </div>
 
-    <div id="now-playing-container">
-        <div id="now-playing">
-            > playing now: [ TM & Ezco44 - BLIND (prod. by endzone) ]
-        </div>
-    </div>
+    <script>
+        const terminal = document.getElementById('terminal');
+        const mainContent = document.getElementById('main-content');
 
-    <script src="script.js"></script>
+        const terminalLines = [
+            { prompt: "od8m@laptop: ~/$ ", command: "cd mydir" },
+            { prompt: "od8m@laptop: ~/mydir$ ", command: "ls" },
+            { output: "total 8\n-rw-r--r-- 1 od8m od8m 4096 Aug 3 12:34 login.sh" },
+            { prompt: "od8m@laptop: ~/mydir$ ", command: "./login.sh" },
+            { output: "Login required for access to mydir:" },
+            { input: "Username: " },
+            { input: "Password: ", password: true },
+        ];
+
+        let currentLine = 0;
+        let currentChar = 0;
+        let inputMode = false;
+        let passwordMode = false;
+
+        function typeNextChar() {
+            if (currentLine >= terminalLines.length) {
+                setTimeout(showMainContent, 1000);
+                return;
+            }
+
+            const line = terminalLines[currentLine];
+
+            if (line.prompt && currentChar === 0) {
+                terminal.innerHTML += `<span class="prompt">${line.prompt}</span>`;
+            }
+
+            if (line.command) {
+                if (currentChar < line.command.length) {
+                    terminal.innerHTML += `<span class="command">${line.command[currentChar]}</span>`;
+                    currentChar++;
+                    setTimeout(typeNextChar, 50);
+                } else {
+                    terminal.innerHTML += '<br>';
+                    currentLine++;
+                    currentChar = 0;
+                    setTimeout(typeNextChar, 500);
+                }
+            } else if (line.output) {
+                terminal.innerHTML += `<span class="output">${line.output}</span><br>`;
+                currentLine++;
+                currentChar = 0;
+                setTimeout(typeNextChar, 500);
+            } else if (line.input) {
+                if (currentChar === 0) {
+                    terminal.innerHTML += `<span class="output">${line.input}</span>`;
+                    terminal.innerHTML += '<span class="input-line"><input type="' + (line.password ? 'password' : 'text') + '" class="input-field" /></span>';
+                    const input = terminal.querySelector('.input-field');
+                    input.focus();
+                    input.addEventListener('keypress', handleInput);
+                    inputMode = true;
+                    passwordMode = line.password;
+                }
+            }
+        }
+
+        function handleInput(e) {
+            if (e.key === 'Enter') {
+                const input = e.target;
+                const inputValue = passwordMode ? '*'.repeat(input.value.length) : input.value;
+                input.insertAdjacentHTML('beforebegin', inputValue);
+                input.remove();
+                terminal.innerHTML += '<br>';
+                inputMode = false;
+                passwordMode = false;
+                currentLine++;
+                currentChar = 0;
+                setTimeout(typeNextChar, 500);
+            }
+        }
+
+        function showMainContent() {
+            terminal.style.display = 'none';
+            mainContent.style.display = 'block';
+            playAudio();
+        }
+
+        function playAudio() {
+            const audio = new Audio('song.mp3');
+            audio.loop = true;
+            audio.play().catch(e => {
+                console.log("Autoplay was prevented. Click anywhere to play audio.");
+                document.body.addEventListener('click', () => audio.play(), { once: true });
+            });
+        }
+
+        typeNextChar();
+    </script>
 </body>
-</html>
