@@ -12,5 +12,6 @@ document.getElementById('play-button').addEventListener('click', function() {
 
 audio.addEventListener('error', function() {
     console.error('Audio error:', audio.error);
+    console.log('Audio URL:', audio.src);
     alert('Failed to load audio. Please check the console for more information.');
 });
