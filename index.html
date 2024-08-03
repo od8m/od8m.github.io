@@ -51,6 +51,7 @@
             display: none;
             height: 100vh;
             overflow: auto;
+            background-color: #000000;  /* Changed to black */
         }
         .content {
             display: flex;
@@ -238,16 +239,6 @@
         function showMainContent() {
             terminal.style.display = 'none';
             mainContent.style.display = 'block';
-            playAudio();
-        }
-
-        function playAudio() {
-            const audio = new Audio('song.mp3');
-            audio.loop = true;
-            audio.play().catch(e => {
-                console.log("Autoplay was prevented. Click anywhere to play audio.");
-                document.body.addEventListener('click', () => audio.play(), { once: true });
-            });
         }
 
         typeNextChar();
