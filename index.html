@@ -119,6 +119,7 @@
         }
         #music-content {
             display: inline-block;
+            position: relative;
             width: 300px;
             overflow: hidden;
         }
@@ -127,9 +128,23 @@
             padding: 0 20px;
             animation: scroll-text 10s linear infinite;
         }
+        #music-border-left, #music-border-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background-color: #1B1D1E;
+            z-index: 1;
+        }
+        #music-border-left {
+            left: 0;
+        }
+        #music-border-right {
+            right: 0;
+        }
         @keyframes scroll-text {
-            0%, 100% { transform: translateX(100%); }
-            50% { transform: translateX(-100%); }
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
     </style>
 </head>
@@ -161,7 +176,9 @@
         </div>
         <div id="music-container">
             <div id="music-content">
-                |<span id="play-button">♪ Click to play ♪</span>|
+                <div id="music-border-left">|</div>
+                <div id="music-border-right">|</div>
+                <span id="play-button">♪ Click to play ♪</span>
                 <span id="now-playing" style="display: none;">Now playing: TM & Ezco44 - BLIND (prod. by endzone)</span>
             </div>
         </div>
@@ -251,7 +268,7 @@
         function setupMusicPlayer() {
             const playButton = document.getElementById('play-button');
             const nowPlaying = document.getElementById('now-playing');
-            const audio = new Audio('song.mp3');
+            const audio = new Audio('https://od8m.github.io/song.mp3');
             
             playButton.addEventListener('click', function() {
                 audio.play().then(() => {
