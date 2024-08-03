@@ -51,7 +51,7 @@
             display: none;
             height: 100vh;
             overflow: auto;
-            background-color: #000000;  /* Changed to black */
+            background-color: #000000;
         }
         .content {
             display: flex;
@@ -106,7 +106,7 @@
         #telegram-button:hover { color: #0088cc; }
         #twitter-button:hover { color: #1DA1F2; }
         #github-button:hover { color: #6e5494; }
-        #now-playing-container {
+        #music-container {
             position: fixed;
             left: 0;
             right: 0;
@@ -117,13 +117,23 @@
             width: 100%;
             z-index: 3;
         }
-        #now-playing {
+        #music-content {
             display: inline-block;
-            padding-left: 100%;
-            animation: scroll-left 20s linear infinite;
+            padding: 0 20px;
         }
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
+        #play-button {
+            background-color: transparent;
+            color: #F8F8F2;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        #now-playing {
+            display: none;
+        }
+        @keyframes scroll-text {
+            0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
     </style>
@@ -154,9 +164,10 @@
                 <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
             </div>
         </div>
-        <div id="now-playing-container">
-            <div id="now-playing">
-                &gt; playing now: [ TM & Ezco44 - BLIND (prod. by endzone) ]
+        <div id="music-container">
+            <div id="music-content">
+                | <button id="play-button">♪ Click to play ♪</button> |
+                <span id="now-playing"></span>
             </div>
         </div>
     </div>
@@ -239,6 +250,36 @@
         function showMainContent() {
             terminal.style.display = 'none';
             mainContent.style.display = 'block';
+            setupMusicPlayer();
+        }
+
+        function setupMusicPlayer() {
+            const playButton = document.getElementById('play-button');
+            const nowPlaying = document.getElementById('now-playing');
+            const musicContent = document.getElementById('music-content');
+            const audio = new Audio('song.mp3');
+            
+            playButton.addEventListener('click', function() {
+                audio.play();
+                playButton.style.display = 'none';
+                nowPlaying.style.display = 'inline';
+                nowPlaying.textContent = " Now playing: TM & Ezco44 - BLIND (prod. by endzone) ";
+                
+                // Set up scrolling animation
+                const contentWidth = musicContent.offsetWidth;
+                const textWidth = nowPlaying.offsetWidth;
+                const duration = (textWidth / 50) * 1000; // Adjust speed as needed
+                
+                nowPlaying.style.animation = `scroll-text ${duration}ms linear infinite`;
+                
+                // Ensure text doesn't go beyond the pipes
+                setInterval(() => {
+                    const rect = nowPlaying.getBoundingClientRect();
+                    if (rect.left < musicContent.offsetLeft) {
+                        nowPlaying.style.transform = 'translateX(100%)';
+                    }
+                }, 50);
+            });
         }
 
         typeNextChar();
