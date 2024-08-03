@@ -119,22 +119,17 @@
         }
         #music-content {
             display: inline-block;
+            width: 300px;
+            overflow: hidden;
+        }
+        #play-button, #now-playing {
+            display: inline-block;
             padding: 0 20px;
-        }
-        #play-button {
-            background-color: transparent;
-            color: #F8F8F2;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: inherit;
-        }
-        #now-playing {
-            display: none;
+            animation: scroll-text 10s linear infinite;
         }
         @keyframes scroll-text {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0%, 100% { transform: translateX(100%); }
+            50% { transform: translateX(-100%); }
         }
     </style>
 </head>
@@ -166,8 +161,8 @@
         </div>
         <div id="music-container">
             <div id="music-content">
-                | <button id="play-button">♪ Click to play ♪</button> |
-                <span id="now-playing"></span>
+                |<span id="play-button">♪ Click to play ♪</span>|
+                <span id="now-playing" style="display: none;">Now playing: TM & Ezco44 - BLIND (prod. by endzone)</span>
             </div>
         </div>
     </div>
@@ -256,29 +251,21 @@
         function setupMusicPlayer() {
             const playButton = document.getElementById('play-button');
             const nowPlaying = document.getElementById('now-playing');
-            const musicContent = document.getElementById('music-content');
             const audio = new Audio('song.mp3');
             
             playButton.addEventListener('click', function() {
-                audio.play();
-                playButton.style.display = 'none';
-                nowPlaying.style.display = 'inline';
-                nowPlaying.textContent = " Now playing: TM & Ezco44 - BLIND (prod. by endzone) ";
-                
-                // Set up scrolling animation
-                const contentWidth = musicContent.offsetWidth;
-                const textWidth = nowPlaying.offsetWidth;
-                const duration = (textWidth / 50) * 1000; // Adjust speed as needed
-                
-                nowPlaying.style.animation = `scroll-text ${duration}ms linear infinite`;
-                
-                // Ensure text doesn't go beyond the pipes
-                setInterval(() => {
-                    const rect = nowPlaying.getBoundingClientRect();
-                    if (rect.left < musicContent.offsetLeft) {
-                        nowPlaying.style.transform = 'translateX(100%)';
-                    }
-                }, 50);
+                audio.play().then(() => {
+                    playButton.style.display = 'none';
+                    nowPlaying.style.display = 'inline-block';
+                }).catch(error => {
+                    console.error('Error playing audio:', error);
+                    alert('Failed to play audio. Please check the console for more information.');
+                });
+            });
+            
+            audio.addEventListener('error', function() {
+                console.error('Audio error:', audio.error);
+                alert('Failed to load audio. Please check the console for more information.');
             });
         }
 
