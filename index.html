@@ -92,7 +92,7 @@
         #play-button, #now-playing {
             display: inline-block;
             padding: 0 20px;
-            animation: scroll-text 10s linear infinite;
+            animation: scroll-text 5s linear infinite; /* Fast scroll */
         }
         #music-border-left, #music-border-right {
             position: absolute;
@@ -143,7 +143,7 @@
                 <div id="music-border-left">|</div>
                 <div id="music-border-right">|</div>
                 <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: Kohina Radio</span>
+                <span id="now-playing" style="display: none;">Now playing: ./music/deadinside.mp3</span> <!-- Updated song name -->
             </div>
         </div>
     </div>
@@ -152,21 +152,10 @@
         function setupMusicPlayer() {
             const playButton = document.getElementById('play-button');
             const nowPlaying = document.getElementById('now-playing');
-            const audio = new Audio('https://kohina.duckdns.org/stream-proxy/kohina.m3u');
-            
+
             playButton.addEventListener('click', function() {
-                audio.play().then(() => {
-                    playButton.style.display = 'none';
-                    nowPlaying.style.display = 'inline-block';
-                }).catch(error => {
-                    console.error('Error playing audio:', error);
-                    alert('Failed to play audio. Please ensure you\'re using a browser that supports streaming audio.');
-                });
-            });
-            
-            audio.addEventListener('error', function() {
-                console.error('Audio error:', audio.error);
-                alert('Failed to load audio. Please ensure you have a stable internet connection and try again.');
+                playButton.style.display = 'none';
+                nowPlaying.style.display = 'inline-block';
             });
         }
 
