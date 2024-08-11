@@ -9,46 +9,12 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: #1B1D1E;
+            background-color: #000000;
             color: #F8F8F2;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             overflow: hidden;
         }
-        #terminal {
-            height: 100vh;
-            width: 100vw;
-            background-color: #1B1D1E;
-            color: #F8F8F2;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 16px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            overflow-y: auto;
-        }
-        .prompt {
-            color: #A6E22E;
-        }
-        .command {
-            color: #F8F8F2;
-        }
-        .output {
-            color: #F8F8F2;
-        }
-        .input-line {
-            display: flex;
-        }
-        .input-field {
-            flex-grow: 1;
-            background: transparent;
-            border: none;
-            color: #F8F8F2;
-            font-family: inherit;
-            font-size: inherit;
-            outline: none;
-        }
         #main-content {
-            display: none;
             height: 100vh;
             overflow: auto;
             background-color: #000000;
@@ -149,8 +115,6 @@
     </style>
 </head>
 <body>
-    <div id="terminal"></div>
-
     <div id="main-content">
         <div class="content">
             <div class="text-content">
@@ -179,96 +143,16 @@
                 <div id="music-border-left">|</div>
                 <div id="music-border-right">|</div>
                 <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: TM & Ezco44 - BLIND (prod. by endzone)</span>
+                <span id="now-playing" style="display: none;">Now playing: 24/7 Retro Game Music Radio</span>
             </div>
         </div>
     </div>
 
     <script>
-        const terminal = document.getElementById('terminal');
-        const mainContent = document.getElementById('main-content');
-
-        const terminalLines = [
-            { prompt: "od8m@laptop: ~/$ ", command: "cd mydir" },
-            { prompt: "od8m@laptop: ~/mydir$ ", command: "ls" },
-            { output: "total 8\n-rw-r--r-- 1 od8m od8m 4096 Aug 3 12:34 login.sh" },
-            { prompt: "od8m@laptop: ~/mydir$ ", command: "./login.sh" },
-            { output: "Login required for access to mydir:" },
-            { input: "Username: " },
-            { input: "Password: ", password: true },
-        ];
-
-        let currentLine = 0;
-        let currentChar = 0;
-        let inputMode = false;
-        let passwordMode = false;
-
-        function typeNextChar() {
-            if (currentLine >= terminalLines.length) {
-                setTimeout(showMainContent, 1000);
-                return;
-            }
-
-            const line = terminalLines[currentLine];
-
-            if (line.prompt && currentChar === 0) {
-                terminal.innerHTML += `<span class="prompt">${line.prompt}</span>`;
-            }
-
-            if (line.command) {
-                if (currentChar < line.command.length) {
-                    terminal.innerHTML += `<span class="command">${line.command[currentChar]}</span>`;
-                    currentChar++;
-                    setTimeout(typeNextChar, 50);
-                } else {
-                    terminal.innerHTML += '<br>';
-                    currentLine++;
-                    currentChar = 0;
-                    setTimeout(typeNextChar, 500);
-                }
-            } else if (line.output) {
-                terminal.innerHTML += `<span class="output">${line.output}</span><br>`;
-                currentLine++;
-                currentChar = 0;
-                setTimeout(typeNextChar, 500);
-            } else if (line.input) {
-                if (currentChar === 0) {
-                    terminal.innerHTML += `<span class="output">${line.input}</span>`;
-                    terminal.innerHTML += '<span class="input-line"><input type="' + (line.password ? 'password' : 'text') + '" class="input-field" /></span>';
-                    const input = terminal.querySelector('.input-field');
-                    input.focus();
-                    input.addEventListener('keypress', handleInput);
-                    inputMode = true;
-                    passwordMode = line.password;
-                }
-            }
-        }
-
-        function handleInput(e) {
-            if (e.key === 'Enter') {
-                const input = e.target;
-                const inputValue = passwordMode ? '*'.repeat(input.value.length) : input.value;
-                input.insertAdjacentHTML('beforebegin', inputValue);
-                input.remove();
-                terminal.innerHTML += '<br>';
-                inputMode = false;
-                passwordMode = false;
-                currentLine++;
-                currentChar = 0;
-                setTimeout(typeNextChar, 500);
-            }
-        }
-
-        function showMainContent() {
-            terminal.style.display = 'none';
-            mainContent.style.display = 'block';
-            setupMusicPlayer();
-        }
-
         function setupMusicPlayer() {
             const playButton = document.getElementById('play-button');
             const nowPlaying = document.getElementById('now-playing');
-            const audio = new Audio('https://od8m.github.io/song.mp3');
+            const audio = new Audio('http://content.radiosega.net:8006/');
             
             playButton.addEventListener('click', function() {
                 audio.play().then(() => {
@@ -286,7 +170,7 @@
             });
         }
 
-        typeNextChar();
+        setupMusicPlayer();
     </script>
 </body>
 </html>
