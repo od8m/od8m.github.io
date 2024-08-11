@@ -143,7 +143,7 @@
                 <div id="music-border-left">|</div>
                 <div id="music-border-right">|</div>
                 <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: 24/7 Retro Game Music Radio</span>
+                <span id="now-playing" style="display: none;">Now playing: Kohina Radio</span>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
         function setupMusicPlayer() {
             const playButton = document.getElementById('play-button');
             const nowPlaying = document.getElementById('now-playing');
-            const audio = new Audio('http://content.radiosega.net:8006/');
+            const audio = new Audio('https://kohina.duckdns.org/stream-proxy/kohina.m3u');
             
             playButton.addEventListener('click', function() {
                 audio.play().then(() => {
@@ -160,13 +160,13 @@
                     nowPlaying.style.display = 'inline-block';
                 }).catch(error => {
                     console.error('Error playing audio:', error);
-                    alert('Failed to play audio. Please check the console for more information.');
+                    alert('Failed to play audio. Please ensure you\'re using a browser that supports streaming audio.');
                 });
             });
             
             audio.addEventListener('error', function() {
                 console.error('Audio error:', audio.error);
-                alert('Failed to load audio. Please check the console for more information.');
+                alert('Failed to load audio. Please ensure you have a stable internet connection and try again.');
             });
         }
 
