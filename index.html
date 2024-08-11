@@ -112,6 +112,12 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
+        /* Hide image on mobile devices */
+        @media (max-width: 767px) {
+            .image-container {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -143,23 +149,29 @@
                 <div id="music-border-left">|</div>
                 <div id="music-border-right">|</div>
                 <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: ./music/deadinside.mp3</span> <!-- Updated song name -->
+                <span id="now-playing" style="display: none;">Now playing: song.mp3</span> <!-- Updated song name -->
             </div>
         </div>
     </div>
 
     <script>
-        function setupMusicPlayer() {
-            const playButton = document.getElementById('play-button');
-            const nowPlaying = document.getElementById('now-playing');
+        const audio = new Audio('https://od8m.github.io/song.mp3');
 
-            playButton.addEventListener('click', function() {
-                playButton.style.display = 'none';
-                nowPlaying.style.display = 'inline-block';
+        document.getElementById('play-button').addEventListener('click', function() {
+            audio.play().then(() => {
+                document.getElementById('play-button').style.display = 'none';
+                document.getElementById('now-playing').style.display = 'inline-block';
+            }).catch(error => {
+                console.error('Error playing audio:', error);
+                alert('Failed to play audio. Please check the console for more information.');
             });
-        }
+        });
 
-        setupMusicPlayer();
+        audio.addEventListener('error', function() {
+            console.error('Audio error:', audio.error);
+            console.log('Audio URL:', audio.src);
+            alert('Failed to load audio. Please check the console for more information.');
+        });
     </script>
 </body>
 </html>
