@@ -6,25 +6,21 @@ body, html {
     color: #fff;
     font-family: monospace;
     overflow: hidden;
-    background-image: url('https://github.com/od8m/your-repo/raw/main/TheEnd.png'); /* Correct URL */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Ensure content is centered horizontally */
     height: 100vh;
     padding: 0 20px;
-    position: relative;
+    position: relative; /* Necessary for absolute positioning of the image */
 }
 
 .text-content {
     z-index: 1;
-    text-align: center;
+    text-align: center; /* Center text content */
 }
 
 .image-container {
@@ -42,7 +38,7 @@ body, html {
 #ascii-art {
     font-size: 0.9em;
     white-space: pre;
-    text-align: center;
+    text-align: center; /* Center ASCII art */
     margin-bottom: 20px;
 }
 
@@ -74,7 +70,7 @@ body, html {
     color: #6e5494;
 }
 
-#music-container {
+#now-playing-container {
     position: fixed;
     left: 0;
     right: 0;
@@ -86,44 +82,13 @@ body, html {
     z-index: 3;
 }
 
-#music-content {
+#now-playing {
     display: inline-block;
-    position: relative;
-    width: 300px;
-    overflow: hidden;
+    padding-left: 100%;
+    animation: scroll-left 20s linear infinite;
 }
 
-#play-button, #now-playing {
-    display: inline-block;
-    padding: 0 20px;
-    animation: scroll-text 5s linear infinite; /* Fast scroll */
-}
-
-#music-border-left, #music-border-right {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    background-color: #000;
-    z-index: 1;
-}
-
-#music-border-left {
-    left: 0;
-}
-
-#music-border-right {
-    right: 0;
-}
-
-@keyframes scroll-text {
-    0% { transform: translateX(100%); }
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
-}
-
-/* Hide image on mobile devices */
-@media (max-width: 767px) {
-    .image-container {
-        display: none;
-    }
 }
