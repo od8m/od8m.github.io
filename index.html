@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>od8m.lol</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: #000000;
             color: #F8F8F2;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             overflow: hidden;
+            background: #000000 url('noise-transparent.png') repeat;
         }
         #main-content {
             height: 100vh;
             overflow: auto;
-            background-color: #000000;
         }
         .content {
             display: flex;
@@ -32,6 +32,7 @@
         .text-content {
             z-index: 1;
             text-align: center;
+            transform: scale(0.75); /* Made everything smaller */
         }
         .image-container {
             position: absolute;
@@ -44,33 +45,35 @@
             object-fit: contain;
         }
         #ascii-art {
-            font-size: 0.9em;
+            font-size: 0.7em; /* Made ASCII art smaller */
             white-space: pre;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Reduced margin */
+            line-height: 1; /* Reduced line height for closer text */
         }
         .button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 6px; /* Reduced gap between buttons */
         }
         .button {
             background-color: transparent;
             color: #F8F8F2;
             border: none;
-            padding: 10px 20px;
-            margin: 5px 0;
+            padding: 6px 12px; /* Reduced padding */
             cursor: pointer;
             transition: color 0.3s;
             text-decoration: none;
             display: block;
-            font-size: 1em;
+            font-size: 0.85em; /* Made button text smaller */
             font-weight: 300;
             text-align: center;
             width: 100%;
         }
         #telegram-button:hover { color: #0088cc; }
-        #twitter-button:hover { color: #1DA1F2; }
+        #gpg-button:hover { color: #50fa7b; }
+        #ida-button:hover { color: #1DA1F2; }
         #github-button:hover { color: #6e5494; }
         #music-container {
             position: fixed;
@@ -82,6 +85,7 @@
             white-space: nowrap;
             width: 100%;
             z-index: 3;
+            font-size: 0.85em; /* Made music text smaller */
         }
         #music-content {
             display: inline-block;
@@ -92,27 +96,19 @@
         #play-button, #now-playing {
             display: inline-block;
             padding: 0 20px;
-            animation: scroll-text 5s linear infinite; /* Fast scroll */
+            animation: scroll-text 5s linear infinite;
         }
         #music-border-left, #music-border-right {
             position: absolute;
             top: 0;
             bottom: 0;
             width: 20px;
-            background-color: #000000;
             z-index: 1;
-        }
-        #music-border-left {
-            left: 0;
-        }
-        #music-border-right {
-            right: 0;
         }
         @keyframes scroll-text {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-        /* Hide image on mobile devices */
         @media (max-width: 767px) {
             .image-container {
                 display: none;
@@ -136,10 +132,10 @@
                 </pre>
                 <div class="button-container">
                     <a href="https://t.me/Od8mCracks" id="telegram-button" class="button" target="_blank">t.me/Od8mCracks</a>
-                    <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" id="twitter-button" class="button" target="_blank">IDA Pro Beta</a>
+                    <button id="gpg-button" class="button">GPG KEY</button>
+                    <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" id="ida-button" class="button" target="_blank">IDA Pro Beta</a>
                     <a href="https://github.com/od8m" id="github-button" class="button" target="_blank">github.com/od8m</a>
-                   <a href="https://discord.gg/rSnxXcgHRt" id="discord-button" class="button" target="_blank">Join our Discord</a>
-                 </div>
+                </div>
             </div>
             <div class="image-container">
                 <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
@@ -150,13 +146,34 @@
                 <div id="music-border-left">|</div>
                 <div id="music-border-right">|</div>
                 <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: ./music/deadinside.mp3</span> <!-- Updated song name -->
+                <span id="now-playing" style="display: none;">Now playing: ./music/deadinside.mp3</span>
             </div>
         </div>
     </div>
 
     <script>
         const audio = new Audio('https://od8m.github.io/song.mp3');
+        const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+mDMEZ4peoxYJKwYBBAHaRw8BAQdAYSo/oyRH3yl7jS9AGEmYHWOp+nlR5E1KnMNv
+PuXEr+W0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQRRO1ENOWvy/px4
+9QDTEOCSx7ntqgUCZ4peowIbAwUJBaPWfQULCQgHAgIiAgYVCgkICwIEFgIDAQIe
+BwIXgAAKCRDTEOCSx7ntqmHEAQDIC0jHZoOQ8/FqYd51cw7VqAyv/1XjOzYny3EM
+D0MqFwEAsB4fFkT8UXdc9s+sFB6kC6zUueX2bgut6uJ7+mkx1wW4OARnil6jEgor
+BgEEAZdVAQUBAQdALOaCYyGu0OmaM8wl2ltwKi12Do1Vym65hQXJkX4GIToDAQgH
+iH4EGBYKACYWIQRRO1ENOWvy/px49QDTEOCSx7ntqgUCZ4peowIbDAUJBaPWfQAK
+CRDTEOCSx7ntqv3PAP9AeKeT9JBa5KEdYZ427NYaBkl+ToeNDrWOZDn0NidkLgD/
+WXG5u8brQR63OEIp1donHoZ+2MSaSdQHCRwExUSLeQ0=
+=GeSU
+-----END PGP PUBLIC KEY BLOCK-----`;
+
+        document.getElementById('gpg-button').addEventListener('click', function() {
+            navigator.clipboard.writeText(gpgKey).then(() => {
+                this.textContent = 'Copied to clipboard!';
+                setTimeout(() => {
+                    this.textContent = 'GPG KEY';
+                }, 2000);
+            });
+        });
 
         document.getElementById('play-button').addEventListener('click', function() {
             audio.play().then(() => {
