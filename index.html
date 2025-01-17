@@ -32,7 +32,6 @@
         .text-content {
             z-index: 1;
             text-align: center;
-            transform: scale(0.75); /* Made everything smaller */
         }
         .image-container {
             position: absolute;
@@ -45,28 +44,30 @@
             object-fit: contain;
         }
         #ascii-art {
-            font-size: 0.7em; /* Made ASCII art smaller */
+            font-size: 0.9em; 
             white-space: pre;
             text-align: center;
-            margin-bottom: 10px; /* Reduced margin */
-            line-height: 1; /* Reduced line height for closer text */
+            margin-bottom: 10px;
+            line-height: 1.2; 
+            transform: scale(1); 
         }
         .button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px; /* Reduced gap between buttons */
+            gap: 8px;
+            transform: scale(0.9); 
         }
         .button {
             background-color: transparent;
             color: #F8F8F2;
             border: none;
-            padding: 6px 12px; /* Reduced padding */
+            padding: 6px 12px;
             cursor: pointer;
             transition: color 0.3s;
             text-decoration: none;
             display: block;
-            font-size: 0.85em; /* Made button text smaller */
+            font-size: 1em; 
             font-weight: 300;
             text-align: center;
             width: 100%;
@@ -85,7 +86,7 @@
             white-space: nowrap;
             width: 100%;
             z-index: 3;
-            font-size: 0.85em; /* Made music text smaller */
+            font-size: 0.9em;
         }
         #music-content {
             display: inline-block;
@@ -117,6 +118,7 @@
     </style>
 </head>
 <body>
+    <!>
     <div id="main-content">
         <div class="content">
             <div class="text-content">
