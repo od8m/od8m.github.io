@@ -152,7 +152,7 @@
 
     <script>
         const audio = new Audio('https://od8m.github.io/song.mp3');
-        const gpgKey = -----BEGIN PGP PUBLIC KEY BLOCK-----
+        const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 mDMEZ4peoxYJKwYBBAHaRw8BAQdAYSo/oyRH3yl7jS9AGEmYHWOp+nlR5E1KnMNv
 PuXEr+W0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQRRO1ENOWvy/px4
 9QDTEOCSx7ntqgUCZ4peowIbAwUJBaPWfQULCQgHAgIiAgYVCgkICwIEFgIDAQIe
@@ -163,31 +163,46 @@ iH4EGBYKACYWIQRRO1ENOWvy/px49QDTEOCSx7ntqgUCZ4peowIbDAUJBaPWfQAK
 CRDTEOCSx7ntqv3PAP9AeKeT9JBa5KEdYZ427NYaBkl+ToeNDrWOZDn0NidkLgD/
 WXG5u8brQR63OEIp1donHoZ+2MSaSdQHCRwExUSLeQ0=
 =GeSU
------END PGP PUBLIC KEY BLOCK-----;
+-----END PGP PUBLIC KEY BLOCK-----`;
 
+        // Copy GPG Key
         document.getElementById('gpg-button').addEventListener('click', function() {
             navigator.clipboard.writeText(gpgKey).then(() => {
                 this.textContent = 'Copied to clipboard!';
                 setTimeout(() => {
                     this.textContent = 'GPG KEY';
                 }, 2000);
+            }).catch(err => {
+                console.error('Clipboard copy failed:', err);
             });
         });
 
+        // Play Audio
         document.getElementById('play-button').addEventListener('click', function() {
             audio.play().then(() => {
                 document.getElementById('play-button').style.display = 'none';
+                document.getElementById('now-playing').style.display
                 document.getElementById('now-playing').style.display = 'inline-block';
+
+                // Add scrolling effect for the "Now Playing" text
+                const nowPlaying = document.getElementById('now-playing');
+                nowPlaying.style.animation = 'scroll-text 10s linear infinite';
             }).catch(error => {
                 console.error('Error playing audio:', error);
-                alert('Failed to play audio. Please check the console for more information.');
+                alert('Failed to play audio. Please check your browser settings.');
             });
         });
 
-        audio.addEventListener('error', function() {
-            console.error('Audio error:', audio.error);
-            console.log('Audio URL:', audio.src);
-            alert('Failed to load audio. Please check the console for more information.');
+        // Handle Audio Errors
+        audio.addEventListener('error', function () {
+            console.error('Audio failed to load:', audio.error);
+            alert('Audio file could not be loaded. Please check the file URL.');
+        });
+
+        // Ensure the text stops animating when the audio ends
+        audio.addEventListener('ended', function () {
+            document.getElementById('play-button').style.display = 'inline-block';
+            document.getElementById('now-playing').style.display = 'none';
         });
     </script>
 </body>
