@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>od8m.lol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="static-background"></div>
+    <div class="static-overlay"></div>
+    <div class="content">
+        <div class="text-content">
+            <div class="logo-container">
+                <img src="od8m.png" alt="od8m" class="logo">
+            </div>
+            <div class="button-container">
+                <a href="https://t.me/Od8mCracks" class="button" target="_blank">t.me/od8mcracks</a>
+                <button id="gpg-button" class="button">GPG KEY</button>
+                <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" class="button" target="_blank">IDA pro</a>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
+        </div>
+        <div id="music-container">
+            <div id="music-content">
+                <span id="music-border-left">|</span>
+                <span id="play-button">♪ click to play ♪</span>
+                <span id="music-border-right">|</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = new Audio('song.mp3');
+        const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+mDMEZ4peoxYJKwYBBAHaRw8BAQdAYSo/oyRH3yl7jS9AGEmYHWOp+nlR5E1KnMNv
+PuXEr+W0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQRRO1ENOWvy/px4
+9QDTEOCSx7ntqgUCZ4peowIbAwUJBaPWfQULCQgHAgIiAgYVCgkICwIEFgIDAQIe
+BwIXgAAKCRDTEOCSx7ntqmHEAQDIC0jHZoOQ8/FqYd51cw7VqAyv/1XjOzYny3EM
+D0MqFwEAsB4fFkT8UXdc9s+sFB6kC6zUueX2bgut6uJ7+mkx1wW4OARnil6jEgor
+BgEEAZdVAQUBAQdALOaCYyGu0OmaM8wl2ltwKi12Do1Vym65hQXJkX4GIToDAQgH
+iH4EGBYKACYWIQRRO1ENOWvy/px49QDTEOCSx7ntqgUCZ4peowIbDAUJBaPWfQAK
+CRDTEOCSx7ntqv3PAP9AeKeT9JBa5KEdYZ427NYaBkl+ToeNDrWOZDn0NidkLgD/
+WXG5u8brQR63OEIp1donHoZ+2MSaSdQHCRwExUSLeQ0=
+=GeSU
+-----END PGP PUBLIC KEY BLOCK-----`;
+
+        const playButton = document.getElementById('play-button');
+        
+        // Music player functionality
+        let isPlaying = false;
+        
+        document.getElementById('music-container').addEventListener('click', function() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playButton.textContent = '♪ playing now : ./music/blankshell.mp3 ♪';
+                }).catch(error => {
+                    console.error('Play failed:', error);
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                playButton.textContent = '♪ click to play ♪';
+            }
+        });
+
+        // Loop audio
+        audio.addEventListener('ended', function() {
+            if (isPlaying) {
+                audio.currentTime = 0;
+                audio.play().catch(error => {
+                    console.error('Loop failed:', error);
+                });
+            }
+        });
+
+        // Copy GPG Key
+        document.getElementById('gpg-button').addEventListener('click', function() {
+            navigator.clipboard.writeText(gpgKey).then(() => {
+                this.textContent = 'Copied!';
+                setTimeout(() => {
+                    this.textContent = 'GPG KEY';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        });
+    </script>
+</body>
+</html>
