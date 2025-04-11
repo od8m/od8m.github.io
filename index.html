@@ -4,154 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>od8m.lol</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            color: #F8F8F2;
-            font-family: 'JetBrains Mono', monospace;
-            overflow: hidden;
-            background: #000000 url('noise-transparent.png') repeat;
-        }
-        #main-content {
-            height: 100vh;
-            overflow: auto;
-        }
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-        }
-        .text-content {
-            z-index: 1;
-            text-align: center;
-        }
-        .image-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 2;
-        }
-        .anime-girl {
-            max-height: 80vh;
-            object-fit: contain;
-        }
-        #ascii-art {
-            font-size: 1em;
-            white-space: pre;
-            text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        .button {
-            background-color: transparent;
-            color: #F8F8F2;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: color 0.3s;
-            text-decoration: none;
-            display: block;
-            font-size: 1.1em;
-            font-weight: 300;
-            text-align: center;
-            width: 100%;
-        }
-        #telegram-button:hover { color: #0088cc; }
-        #gpg-button:hover { color: #50fa7b; }
-        #ida-button:hover { color: #1DA1F2; }
-        #github-button:hover { color: #6e5494; }
-        #music-container {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 20px;
-            text-align: center;
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-            z-index: 3;
-            font-size: 1em;
-        }
-        #music-content {
-            display: inline-block;
-            position: relative;
-            width: 300px;
-            overflow: hidden;
-        }
-        #play-button, #now-playing {
-            display: inline-block;
-            padding: 0 20px;
-            animation: scroll-text 5s linear infinite;
-        }
-        #music-border-left, #music-border-right {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 20px;
-            z-index: 1;
-        }
-        @keyframes scroll-text {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        @media (max-width: 767px) {
-            .image-container {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main-content">
-        <div class="content">
-            <div class="text-content">
-                <pre id="ascii-art">
- ____  _                           ______ ____  
-|  _ \(_)                         |  ____|  _ \ 
-| |_) |_ _ __   __ _ _ __ _   _   | |__  | |_) |
-|  _ <| | '_ \ / _ | '__| | | |  |  __| |  _ < 
-| |_) | | | | | (_| | |  | |_| |  | |    | |_) |
-|____/|_|_| |_|\__,_|_|   \__, |  |_|    |____/ 
-                           __/ |                
-                          |___/                 
-                </pre>
-                <div class="button-container">
-                    <a href="https://t.me/Od8mCracks" id="telegram-button" class="button" target="_blank">t.me/Od8mCracks</a>
-                    <button id="gpg-button" class="button">GPG KEY</button>
-                    <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" id="ida-button" class="button" target="_blank">IDA Pro Beta</a>
-                    <a href="https://github.com/od8m" id="github-button" class="button" target="_blank">github.com/od8m</a>
-                </div>
+    <div class="static-background"></div>
+    <div class="static-overlay"></div>
+    <div class="content">
+        <div class="text-content">
+            <div class="logo-container">
+                <img src="od8m.png" alt="od8m" class="logo">
             </div>
-            <div class="image-container">
-                <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
+            <div class="button-container">
+                <a href="https://t.me/Od8mCracks" class="button" target="_blank">t.me/od8mcracks</a>
+                <button id="gpg-button" class="button">GPG KEY</button>
+                <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" class="button" target="_blank">IDA pro</a>
             </div>
+        </div>
+        <div class="image-container">
+            <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
         </div>
         <div id="music-container">
             <div id="music-content">
-                <div id="music-border-left">|</div>
-                <div id="music-border-right">|</div>
-                <span id="play-button">♪ Click to play ♪</span>
-                <span id="now-playing" style="display: none;">Now playing: ./music/deadinside.mp3</span>
+                <span id="music-border-left">|</span>
+                <span id="play-button">♪ click to play ♪</span>
+                <span id="music-border-right">|</span>
             </div>
         </div>
     </div>
 
     <script>
-        const audio = new Audio('https://od8m.github.io/song.mp3');
+        const audio = new Audio('song.mp3');
         const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 mDMEZ4peoxYJKwYBBAHaRw8BAQdAYSo/oyRH3yl7jS9AGEmYHWOp+nlR5E1KnMNv
 PuXEr+W0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQRRO1ENOWvy/px4
@@ -165,44 +47,46 @@ WXG5u8brQR63OEIp1donHoZ+2MSaSdQHCRwExUSLeQ0=
 =GeSU
 -----END PGP PUBLIC KEY BLOCK-----`;
 
+        const playButton = document.getElementById('play-button');
+        
+        // Music player functionality
+        let isPlaying = false;
+        
+        document.getElementById('music-container').addEventListener('click', function() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playButton.textContent = '♪ playing now : ./music/blankshell.mp3 ♪';
+                }).catch(error => {
+                    console.error('Play failed:', error);
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                playButton.textContent = '♪ click to play ♪';
+            }
+        });
+
+        // Loop audio
+        audio.addEventListener('ended', function() {
+            if (isPlaying) {
+                audio.currentTime = 0;
+                audio.play().catch(error => {
+                    console.error('Loop failed:', error);
+                });
+            }
+        });
+
         // Copy GPG Key
         document.getElementById('gpg-button').addEventListener('click', function() {
             navigator.clipboard.writeText(gpgKey).then(() => {
-                this.textContent = 'Copied to clipboard!';
+                this.textContent = 'Copied!';
                 setTimeout(() => {
                     this.textContent = 'GPG KEY';
                 }, 2000);
             }).catch(err => {
-                console.error('Clipboard copy failed:', err);
+                console.error('Failed to copy:', err);
             });
-        });
-
-        // Play Audio
-        document.getElementById('play-button').addEventListener('click', function() {
-            audio.play().then(() => {
-                document.getElementById('play-button').style.display = 'none';
-                document.getElementById('now-playing').style.display
-                document.getElementById('now-playing').style.display = 'inline-block';
-
-                // Add scrolling effect for the "Now Playing" text
-                const nowPlaying = document.getElementById('now-playing');
-                nowPlaying.style.animation = 'scroll-text 10s linear infinite';
-            }).catch(error => {
-                console.error('Error playing audio:', error);
-                alert('Failed to play audio. Please check your browser settings.');
-            });
-        });
-
-        // Handle Audio Errors
-        audio.addEventListener('error', function () {
-            console.error('Audio failed to load:', audio.error);
-            alert('Audio file could not be loaded. Please check the file URL.');
-        });
-
-        // Ensure the text stops animating when the audio ends
-        audio.addEventListener('ended', function () {
-            document.getElementById('play-button').style.display = 'inline-block';
-            document.getElementById('now-playing').style.display = 'none';
         });
     </script>
 </body>
