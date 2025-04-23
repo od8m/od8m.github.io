@@ -33,9 +33,9 @@
     </div>
 
     <script>
-        const audio = new Audio('song.mp3');
-        const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
-
+        document.addEventListener('DOMContentLoaded', function () {
+            const audio = new Audio('song.mp3');
+            const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 mDMEaAkJaxYJKwYBBAHaRw8BAQdAk/dE+1FusnxNIiqnMz8p6tTq4n0LvSQDdEqr
 todrbJu0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQQ9dLVGaBu7Upjc
 kEnsdnlp4bxjBAUCaAkJawIbAwUJBaT/JQULCQgHAgIiAgYVCgkICwIEFgIDAQIe
@@ -46,48 +46,49 @@ iH4EGBYKACYWIQQ9dLVGaBu7UpjckEnsdnlp4bxjBAUCaAkJawIbDAUJBaT/JQAK
 CRDsdnlp4bxjBNRQAPwLxFlAg3Pw7MGaOe32NIKetHl3Tz3IDlvWT4NROLwUjgD/
 a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
 =7cqZ
------END PGP PUBLIC KEY BLOCK-----`
-;
+-----END PGP PUBLIC KEY BLOCK-----`;
 
-        const playButton = document.getElementById('play-button');
-        
-        
-        let isPlaying = false;
-        
-        document.getElementById('music-container').addEventListener('click', function() {
-            if (!isPlaying) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    playButton.textContent = '♪ playing now : ./music/blankshell.mp3 ♪';
-                }).catch(error => {
-                    console.error('Play failed:', error);
+            const gpgButton = document.getElementById('gpg-button');
+            const playButton = document.getElementById('play-button');
+
+            let isPlaying = false;
+
+            // Music control logic
+            document.getElementById('music-container').addEventListener('click', function() {
+                if (!isPlaying) {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        playButton.textContent = '♪ playing now : ./music/blankshell.mp3 ♪';
+                    }).catch(error => {
+                        console.error('Play failed:', error);
+                    });
+                } else {
+                    audio.pause();
+                    isPlaying = false;
+                    playButton.textContent = '♪ click to play ♪';
+                }
+            });
+
+            audio.addEventListener('ended', function() {
+                if (isPlaying) {
+                    audio.currentTime = 0;
+                    audio.play().catch(error => {
+                        console.error('Loop failed:', error);
+                    });
+                }
+            });
+
+            // GPG Key copy logic
+            gpgButton.addEventListener('click', function() {
+                console.log("Button clicked");
+                navigator.clipboard.writeText(gpgKey).then(() => {
+                    gpgButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        gpgButton.textContent = 'GPG KEY';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
                 });
-            } else {
-                audio.pause();
-                isPlaying = false;
-                playButton.textContent = '♪ click to play ♪';
-            }
-        });
-
-        // just loop song
-        audio.addEventListener('ended', function() {
-            if (isPlaying) {
-                audio.currentTime = 0;
-                audio.play().catch(error => {
-                    console.error('Loop failed:', error);
-                });
-            }
-        });
-
-        
-        document.getElementById('gpg-button').addEventListener('click', function() {
-            navigator.clipboard.writeText(gpgKey).then(() => {
-                this.textContent = 'Copied!';
-                setTimeout(() => {
-                    this.textContent = 'GPG KEY';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy:', err);
             });
         });
     </script>
