@@ -34,7 +34,7 @@
 
     <script>
         const audio = new Audio('song.mp3');
-        const gpgKey = -----BEGIN PGP PUBLIC KEY BLOCK-----
+        const gpgKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mDMEaAkJaxYJKwYBBAHaRw8BAQdAk/dE+1FusnxNIiqnMz8p6tTq4n0LvSQDdEqr
 todrbJu0FG9kOG0gPG9kOG1Ab2Q4bS5sb2w+iJkEExYKAEEWIQQ9dLVGaBu7Upjc
@@ -46,12 +46,12 @@ iH4EGBYKACYWIQQ9dLVGaBu7UpjckEnsdnlp4bxjBAUCaAkJawIbDAUJBaT/JQAK
 CRDsdnlp4bxjBNRQAPwLxFlAg3Pw7MGaOe32NIKetHl3Tz3IDlvWT4NROLwUjgD/
 a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
 =7cqZ
------END PGP PUBLIC KEY BLOCK-----
+-----END PGP PUBLIC KEY BLOCK-----`
 ;
 
         const playButton = document.getElementById('play-button');
         
-        // Music player functionality
+        
         let isPlaying = false;
         
         document.getElementById('music-container').addEventListener('click', function() {
@@ -69,7 +69,7 @@ a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
             }
         });
 
-        // Loop audio
+        // just loop song
         audio.addEventListener('ended', function() {
             if (isPlaying) {
                 audio.currentTime = 0;
@@ -79,7 +79,7 @@ a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
             }
         });
 
-        // Copy GPG Key
+        
         document.getElementById('gpg-button').addEventListener('click', function() {
             navigator.clipboard.writeText(gpgKey).then(() => {
                 this.textContent = 'Copied!';
