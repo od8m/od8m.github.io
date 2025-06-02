@@ -2,149 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>od8m.lol</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
-        
         body {
             background: #111111;
+            font-family: monospace;
             color: #ff5555;
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            line-height: 1.6;
         }
-
         .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 800px;
-            width: 100%;
             text-align: center;
+            padding: 20px;
         }
-
-        .logo-container {
-            margin-bottom: 30px;
-        }
-
         .logo {
             max-width: 200px;
-            height: auto;
-            filter: drop-shadow(0 0 5px rgba(255, 85, 85, 0.3));
-        }
-
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
             margin-bottom: 30px;
         }
-
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
         .button {
             background: transparent;
             color: #ff5555;
             border: 1px solid #ff5555;
             padding: 10px 20px;
-            font-family: inherit;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
             border-radius: 4px;
+            transition: all 0.3s ease;
         }
-
         .button:hover {
             background: rgba(255, 85, 85, 0.1);
-            transform: translateY(-2px);
         }
-
-        .image-container {
-            margin: 20px 0;
-        }
-
         .anime-girl {
             max-width: 400px;
             width: 100%;
-            height: auto;
             border-radius: 8px;
-            opacity: 0.95;
-            transition: opacity 0.3s ease;
+            margin-bottom: 30px;
         }
-
-        .anime-girl:hover {
-            opacity: 1;
-        }
-
         #music-container {
-            margin-top: 20px;
-            padding: 10px 20px;
             border: 1px solid #ff5555;
+            padding: 10px 20px;
             border-radius: 4px;
+            display: inline-block;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        #music-container:hover {
-            background: rgba(255, 85, 85, 0.1);
-        }
-
-        #music-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #play-button {
-            font-size: 0.9em;
-        }
-
-        #music-border-left, #music-border-right {
-            color: #ff5555;
-            opacity: 0.7;
-        }
-
         @media (max-width: 600px) {
             .button-container {
                 flex-direction: column;
-                align-items: center;
             }
-            
             .anime-girl {
                 max-width: 300px;
             }
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
     <div class="content">
         <div class="logo-container">
             <img src="od8m.png" alt="od8m" class="logo">
         </div>
-
         <div class="button-container">
             <a href="https://t.me/Od8mCracks" class="button" target="_blank">t.me/od8mcracks</a>
             <button id="gpg-button" class="button">GPG KEY</button>
             <a href="https://github.com/od8m/od8m.github.io/raw/refs/heads/main/IdaProBeta.rar?download=" class="button" target="_blank">IDA pro</a>
         </div>
-
         <div class="image-container">
             <img src="anime_girl.png" alt="Anime girl" class="anime-girl">
         </div>
-
         <div id="music-container">
             <div id="music-content">
                 <span id="music-border-left">|</span>
@@ -177,7 +114,6 @@ a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
 
             let isPlaying = false;
 
-            
             document.getElementById('music-container').addEventListener('click', function() {
                 if (!isPlaying) {
                     audio.play().then(() => {
@@ -202,7 +138,6 @@ a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
                 }
             });
 
-            
             gpgButton.addEventListener('click', function() {
                 navigator.clipboard.writeText(gpgKey).then(() => {
                     gpgButton.textContent = 'Copied!';
@@ -212,16 +147,6 @@ a5+oPIrHiMWzYiAAeJR+//To2cGpYWghV4lc46wyqgg=
                 }).catch(err => {
                     console.error('Failed to copy:', err);
                 });
-            });
-
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'F12' || 
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                    (e.ctrlKey && e.key === 'u')) {
-                    e.preventDefault();
-                }
             });
         });
     </script>
