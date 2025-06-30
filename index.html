@@ -6,20 +6,25 @@
     <title>od8m.lol</title>
     <style>
         body {
-            background: #111111; /* ONLY CHANGE: Solid dark background */
+            background: #111111;
+            color: #ff5555;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             margin: 0;
             padding: 0;
             min-height: 100vh;
         }
-        /* Keep original animated background elements but hide them */
         .static-background, .static-overlay {
             display: none;
         }
     </style>
-    <link rel="stylesheet" href="style.css"> <!-- Keep your original CSS file -->
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <!-- Keep ALL original HTML exactly as-is -->
     <div class="static-background"></div>
     <div class="static-overlay"></div>
     <div class="content">
@@ -45,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Keep ALL original JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const audio = new Audio('song.mp3');
